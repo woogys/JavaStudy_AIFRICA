@@ -10,7 +10,7 @@
 8. str.equals("yes")
 
 4-2
-
+```java
 class 4_2 {
     public static void main(String[] args) {
         int sum = 0;
@@ -22,9 +22,10 @@ class 4_2 {
         System.out.println(sum);
     }
 }
+```
 
 4-3
-
+```java
 class 4_3 {
     public static void main(String[] args) {
         int sum = 0;
@@ -37,9 +38,10 @@ class 4_3 {
         System.out.println(total);
     }
 }
+```
 
 4-4
-
+```java
 class 4_4{
     public static void main(String[] args) {
         int sum = 0;
@@ -57,9 +59,10 @@ class 4_4{
         System.out.println("sum");
     }
 }
+```
 
 4-5
-
+```java
 class 4_5 {
     public static void main(String[] args) {
         int i = 0;
@@ -74,9 +77,10 @@ class 4_5 {
         }
     }
 }
+```
 
 4-6
-
+```java
 class 4_6 {
     public static void main(String[] args) {
         for(int i=1; i<=6; i++)
@@ -85,9 +89,10 @@ class 4_6 {
                     System.out.println(i+"+"+j+"="+(i+j));
     }
 }
+```
 
 4-7
-
+```java
 class 4_7 {
     public static void main(String[] args) {
         int value = (int)(Math.random()*6)+1;
@@ -95,9 +100,10 @@ class 4_7 {
         System.out.println("value:"+value); 
     }
 }
+```
 
 4-8
-
+```java
 class 4_8 {
     public static void main(String[] args) {
         for (int x = 0; x<=10; i++){
@@ -109,9 +115,10 @@ class 4_8 {
         }
     }
 }
+```
 
 4-9
-
+```java
 class 4_9 {
      public static void main(String[] args) {
          String str = "12345";
@@ -124,9 +131,10 @@ class 4_9 {
          System.out.println(sum);
     }
 }
+```
 
 4-10
-
+```java
 class 4_10 {
      public static void main(String[] args) {
          int num = "12345";
@@ -140,9 +148,10 @@ class 4_10 {
          System.out.println(sum);
     }
 }
+```
 
 4-11
-
+```java
 class 4_11 {
     public static void main(String[] args) {
         int num1 = 1;
@@ -159,9 +168,10 @@ class 4_11 {
         }
     }
 }
+```
 
 4-12
-
+```java
 class 4_12 {
     public static void main(String[] args) {
         for (int i = 1; i<=9; i++){
@@ -172,9 +182,10 @@ class 4_12 {
         }
     }
 }
+```
 
 4-13
-
+```java
 class 4_13 {
     public static void main(String[] args) {
         String value = "12o34";
@@ -196,11 +207,16 @@ class 4_13 {
         }
     }
 }
+```
 
 4-14
 
-(1) (int)(Math.random()*100)+1;
+(1)
+```java
+(int)(Math.random()*100)+1;
+```
 (2) 
+```java
     if(input<answer) {
         System.out.println("더 큰 수를 입력하세요.");
     } else if(answer<input){
@@ -210,6 +226,7 @@ class 4_13 {
         System.out.println("시도 횟수는 "+count+"번입니다.");
         break;
     }
+```
 
 4-15
 

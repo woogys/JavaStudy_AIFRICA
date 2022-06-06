@@ -1,4 +1,5 @@
 4-1 
+
 1. 10 < x && x < 20
 2. !(ch ==' ' || ch == '\t')
 3. ch == 'x' || ch == 'X'
@@ -9,6 +10,7 @@
 8. str.equals("yes")
 
 4-2
+
 class 4_2 {
     public static void main(String[] args) {
         int sum = 0;
@@ -22,6 +24,7 @@ class 4_2 {
 }
 
 4-3
+
 class 4_3 {
     public static void main(String[] args) {
         int sum = 0;
@@ -36,6 +39,7 @@ class 4_3 {
 }
 
 4-4
+
 class 4_4{
     public static void main(String[] args) {
         int sum = 0;
@@ -55,6 +59,7 @@ class 4_4{
 }
 
 4-5
+
 class 4_5 {
     public static void main(String[] args) {
         int i = 0;
@@ -71,6 +76,7 @@ class 4_5 {
 }
 
 4-6
+
 class 4_6 {
     public static void main(String[] args) {
         for(int i=1; i<=6; i++)
@@ -81,6 +87,7 @@ class 4_6 {
 }
 
 4-7
+
 class 4_7 {
     public static void main(String[] args) {
         int value = (int)(Math.random()*6)+1;
@@ -90,6 +97,7 @@ class 4_7 {
 }
 
 4-8
+
 class 4_8 {
     public static void main(String[] args) {
         for (int x = 0; x<=10; i++){
@@ -103,6 +111,7 @@ class 4_8 {
 }
 
 4-9
+
 class 4_9 {
      public static void main(String[] args) {
          String str = "12345";
@@ -117,6 +126,7 @@ class 4_9 {
 }
 
 4-10
+
 class 4_10 {
      public static void main(String[] args) {
          int num = "12345";
@@ -132,6 +142,7 @@ class 4_10 {
 }
 
 4-11
+
 class 4_11 {
     public static void main(String[] args) {
         int num1 = 1;
@@ -150,6 +161,7 @@ class 4_11 {
 }
 
 4-12
+
 class 4_12 {
     public static void main(String[] args) {
         for (int i = 1; i<=9; i++){
@@ -162,6 +174,7 @@ class 4_12 {
 }
 
 4-13
+
 class 4_13 {
     public static void main(String[] args) {
         String value = "12o34";
@@ -185,6 +198,7 @@ class 4_13 {
 }
 
 4-14
+
 (1) (int)(Math.random()*100)+1;
 (2) 
     if(input<answer) {
@@ -198,5 +212,6 @@ class 4_13 {
     }
 
 4-15
+
 result = result*10 + tmp%10;
 tmp /= 10;

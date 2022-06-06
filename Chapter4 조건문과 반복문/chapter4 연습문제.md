@@ -229,6 +229,7 @@ class 4_13 {
 ```
 
 4-15
-
+```java
 result = result*10 + tmp%10;
 tmp /= 10;
+```

@@ -101,6 +101,7 @@ class Exercise5_5 {
 5-6     
 거스름돈을 몇 개의 동전으로 할 수 있는지 계산하는 문제.        
 변수  money의 금액을 동전으로 바꿨을 때 각각 동전이 몇 개 필요한지 계산해서 출력.
+나눗셈 연산자와 나머지 연산자를 사용할 것!
 ```java
 class Exercise5_6 {
     public static void main(Strign[] args) {
@@ -111,8 +112,8 @@ class Exercise5_6 {
         System.out.println("money="+money);
         
         for(int i = 0; i<coinUnit.length; i++){
-            System.out.println(coinUnit[i]+"원: "+money/coinUnit[i]);
-            money = money&coinUnit[i];
+            System.out.println(coinUnit[i]+"원: "+money/coinUnit[i]); // 동전 큰 단위부터 나눠서 거스름돈 객수를 줄임
+            money = money%coinUnit[i]; // 나머지 연산으로 거스름돈 지불 후 남은 금액 계산. 이후 계속 반복. 
         }
     } // main
 }

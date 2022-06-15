@@ -234,6 +234,8 @@ class Exercise5_9 {
 } // end of class
 ```
 
+5-10        
+알파벳과 숫자를 암호표로 암호화 하는 프로그램 완성
 
 ```java
 ```

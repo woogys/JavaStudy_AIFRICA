@@ -118,12 +118,132 @@ class Exercise5_6 {
     } // main
 }
 ```
+5-7     
+
+```java
+class Exercise5_7 {
+    public static void main(Strign[] args) {
+        if(args.length!=1) {
+            System.out.println("USAGE: java Exercise5_7 3120");
+            System.exit(0);
+        }
+
+        // 문자열을 숫자로 변환한다. 입력한 값이 숫자가 아닐 경우 예외가 발생한다. 
+        int money = Integer.parseInt(args[0]);
+
+        System.out.println("money="+money);
+        
+        int[] coinUnit = {500, 100, 50, 10}; //동전의 단위
+        int[] coin     = {5, 5, 5, 5}; //단위별 동전의 개수
+
+        for(int i=0;i<coinUnit.length;i++) {
+            int coinNum = 0;
+            // 1. 금액(money)을 동전단위로 나눠서 필요한 동전의 개수(coinNum)를 구한다.
+            coinNum = money / coinUnit[i];
+            // 2. 배열 coin에서 coinNum만큼의 동전을 뺀다.
+            // (만일 충분한 동전이 없다면 배열 coin에 있는 만큼만 뺀다.) 
+            if(coin[i] >= coinNum) {
+                 coin[i] -= coinNum; 
+            } else {
+                coinNum = coin[i]; 
+                coin[i] = 0;
+            }
+            // 3. 금액에서 동전의 개수(coinNum)와 동전단위를 곱한 값을 뺀다.
+            money -= coinNum * coinUnit[i];
+
+            System.out.println(coinUnit[i]+"원: "+ coinNum);
+        }
+        if(money > 0) {
+            System.out.println("거스름돈이 부족합니다.");
+            System.exit(0); // 프로그램을 종료한다.
+        }
+
+        System.out.println("=남은 동전의 개수 =");
+        
+        for(int i=0; i<coinUnit.length;i++){
+            System.out.println(coinUnit[i]+"원:"+coin[i]);
+        }
+    } // main
+}
+```
+5-8     
+배열 answer에 담긴 데이터를 읽고 각 숫자의 개수를 세어서 개수만큼 *을 찍는 프로그램.
+
+```java
+class Exercise5_8 {
+    public static void main(Strign[] args) {
+        int[] answer = { 1,4,4,3,1,4,4,2,1,3,2 }; 
+        int[] counter = new int[4]; // 숫자 범위가 1~4까지이므로 크기가 4인 배열 생성
+
+        for(int i=0; i < answer.length; i++) {
+            counter[answer[i]-1]++; // -1은 index 범위가 0~3이어서 해주는 것. 
+        }
+
+        for(int i=0; i < counter.length;i++) {
+            System.out.print(counter[i]);
+
+            for (int j = 0; j < counter[i]; j++) {
+                System.out.print("*"); 
+            }
+            System.out.println();
+        }
+    } // end of main
+} // end of class
+```
+
+5-9     
+주어진 배열을 시계방향 90도 회전시키는 프로그램
+
+```java
+class Exercise5_9 {
+    public static void main(Strign[] args) {
+        char[][] star = {
+                {'*', '*', ' ', ' ', ' '},
+                {'*', '*', ' ', ' ', ' '},
+                {'*', '*', '*', '*', '*'},
+                {'*', '*', '*', '*', '*'}
+        };
+
+        char[][] result = new char[star[0].length][star.length];
+
+        for (int i = 0; i < star.length; i++) {
+            for (int j = 0; j < star[i].length; j++) {
+                System.out.print(star[i][j]);
+            }
+            System.out.println();
+        }
+
+        System.out.println();
+
+        for (int i = 0; i < star.length; i++) {
+            for (int j = 0; j < star[i].length; j++) {
+                // 알맞은 코드를 넣어 완성
+                int x = j; // 90도 회전시 4*5 배열이 5*4 배열로 바뀌고, x 값은 j 값과 일치한다. 
+                int y = star.length-1-i; // i+y=star.length-1 -> 'y=star.length-1-i'
+                
+                result[x][y]=star[i][j];
+            }
+        }
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[i].length; j++) {
+                System.out.print(result[i][j]);
+            }
+            System.out.println();
+        }
+    } // end of main
+} // end of class
+```
+
 
 ```java
 ```
 
 ```java
 ```
+```java
+```
 
 ```java
 ```
+
+

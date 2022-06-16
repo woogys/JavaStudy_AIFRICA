@@ -257,7 +257,7 @@ class Exercise5_10 {
                     (1) 알맞은 코드를 넣어 완성하시오.
              */
             if ('a' <= ch && ch <= 'z') {
-                result += abcCode[ch-'a']; // 'a'는 abcCode[0], 'c'는 abcCode[2] 이므로 abcCode[cd-'a']로 일반화 가능!
+                result += abcCode[ch-'a']; // 'a'는 abcCode[0], 'c'는 abcCode[2] 이므로 abcCode[ch-'a']로 일반화 가능!
             } esle if ('0'<= ch && ch <= '9'){
                 result += numCode[ch-'0'];
             }

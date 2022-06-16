@@ -240,17 +240,140 @@ class Exercise5_9 {
 ```java
 class Exercise5_10 {
     public static void main(Strign[] args) {
+        char[] abcCode =
+                { '`','~','!','@','#','$','%','^','&','*', 
+                  '(',')','-','_','+','=','|','[',']','{', 
+                  '}',';',':',',','.','/'};
+                         //0   1   2   3   4   5   6   7   8   9 
+        char[] numCode = {'q','w','e','r','t','y','u','i','o','p'};
         
+        String src = "abc123"; 
+        String result = "";
+
+        // 문자열 src의 문자를 charAt()으로 하나씩 읽어서 변환 후 result에 저장 
+        for(int i=0; i < src.length();i++) {
+            char ch = src.charAt(i);
+            /*
+                    (1) 알맞은 코드를 넣어 완성하시오.
+             */
+            if ('a' <= ch && ch <= 'z') {
+                result += abcCode[ch-'a']; // 'a'는 abcCode[0], 'c'는 abcCode[2] 이므로 abcCode[cd-'a']로 일반화 가능!
+            } esle if ('0'<= ch && ch <= '9'){
+                result += numCode[ch-'0'];
+            }
+        }
+        System.out.println("src:"+src);
+        System.out.println("result:"+result);
+    } // end of main
+} // end of class
+```
+
+5-11        
+주어진 2차원 배열보다 가로,세로로 1이 더 큰 배열 생성 후 마지막 요소들에 각 행,열의 총합 저장 후 출력 하는 프로그램
+```java
+class Exercise5_11 {
+    public static void main(Strign[] args) {
+        int[][] score = {
+                {100, 100, 100}
+                , {20, 20, 20}
+                , {30, 30, 30}
+                , {40, 40, 40}
+                , {50, 50, 50}
+        };
+        int[][] result = new int[score.length + 1][score[0].length + 1];
+
+        for (int i = 0; i < score.length; i++) {
+            for (int j = 0; j < score[i].length; j++) {
+            /*
+                   (1) 알맞은 코드를 넣어 완성하시오.
+            */
+                result[i][j] = score[i][j];
+                result[i][score[0].length] += result[i][j];
+                result[score.length][j] += result[i][j];
+                result[score.length][score[0].length] += result[i][j];
+            }
+        }
+
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[i].length; j++) {
+                System.out.printf("%4d", result[i][j]);
+            }
+            System.out.println();
+        }
+      }
+    }
+
+```
+
+5-12
+주어진 실행 결과와 같게 나오도록 완성
+```java
+import java.util.Scanner;
+
+class Exercise5_12 {
+    public static void main(Strign[] args) {
+        String[][] words = {
+                {"chair", "의자"}, // words[0][0], words[0][1]
+                {"computer", "컴퓨터"}, // words[1][0], words[1][1]
+                {"integer", "정수"} // words[2][0], words[2][1]
+        };
+
+        int score = 0; // 총 맞춘 문제 개수를 담을 변수
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = 0; i < words.length; i++) {
+            System.out.printf("Q%d. %s의 뜻은?", i + 1, words[i][0]);
+
+            String tmp = scanner.nextLine();
+
+            if (tmp.equals(words[i][1])) {
+                System.out.printf("정답입니다.%n%n");
+                score++;
+            } else {
+                System.out.printf("틀렸습니다. 정답은 %s입니다.%n%n", words[i][1]);
+            }
+        }
+        System.out.printf("전체 %d문제 중 %d문제 맞추셨습니다.%n",
+                words.length, score);
     }
 }
 ```
 
-```java
-```
-```java
-```
+5-13        
+단어의 글자 위치를 섞어서 보여주고 원래 단어를 맞추는 예제. 실행 결과를 보여주도록 완성
 
 ```java
+import java.util.Scanner;
+
+class Exercise5_13 {
+    public static void main(String args[]) {
+        String[] words = {"television", "computer", "mouse", "phone"};
+
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = 0; i < words.length; i++) {
+            char[] question = words[i].toCharArray(); // String을 char[]로 변환
+
+            for (int j = 0; j < question.length; j++) {
+                int idx = (int) (Math.random() * question.length);
+
+                char tmp = question[i];
+                question[i] = question[idx];
+                question[idx] = tmp;
+            }
+
+            System.out.printf("Q%d. %s의 정답을 입력하세요.>",
+                    i + 1, new String(question));
+            String answer = scanner.nextLine();
+
+            // trim()으로 answer의 좌우 공백을 제거한 후, equals로 word[i]와 비교 
+            if (words[i].equals(answer.trim()))
+                System.out.printf("맞았습니다.%n%n");
+            else
+                System.out.printf("틀렸습니다.%n%n");
+        }
+    }//main의끝
+}
 ```
 
 

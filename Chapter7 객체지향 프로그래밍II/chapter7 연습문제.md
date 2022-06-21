@@ -7,9 +7,8 @@ class SutdaDeck {
     SutdaCard[] cards = new SutdaCard[CARD_NUM];
     
     SutdaDeck() {
-/* 
-(1) 배열 SutdaCard를 적절히 초기화 하시오. 
-*/
+        //(1) 배열 SutdaCard를 적절히 초기화 하시오. 
+        
         for(i=0; i<cards.length; i++){
             int num = i%10+1; // 1부터 10까지 숫자가 한쌍씩 있다고 했으므로, 
             // 1부터 19까지 10으로 나눈 나머지만 취해서 +1을 해주면 카드가 마련된다. 

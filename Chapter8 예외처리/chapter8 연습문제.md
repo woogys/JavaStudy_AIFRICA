@@ -34,6 +34,7 @@ d.
 ```java
 void add(int a, int b)
     throws InvalidNumberException, NotANumberException {}
+
 class NumberException extends Exception {}
 class InvalidNumberException extends NumberException {} 
 class NotANumberException extends NumberException {}
@@ -99,8 +100,8 @@ c. Exception은 최상위 클래스이므로 가장 마지막 catch 블럭에 �
 class Exercise8_5 {
 static void method(boolean b) {
     try {
-        System.out.println(1);
-        if (b) throw new ArithmeticException();
+        System.out.println(1); // 1출력
+        if (b) throw new ArithmeticException(); // true니까 예외 발생 
         System.out.println(2);
     } catch (RuntimeException r) {
         System.out.println(3);
@@ -117,22 +118,256 @@ static void method(boolean b) {
     method(true);
     method(false); 
     } // main
-} 
+}
+```
+```
+실행결과
+1
+3
+5
+1
+2
+5
+6
+103/ 1 출력 -> 104/true니까 예외 발생 -> 첫번째 catch 3 출력 -> finally는 예외 관계없이 실행, 5출력
+-> 첫번째 catch 리턴에서 method(false) 실행 -> 1출력 -> false니까 2출력 -> finally, 5 출력 -> 6 출력  
 
+```
+
+8-6
+```
+아래 코드가 실행될 때 결과를 적으시오.
+```
+```java
+class Exercise8_6 {
+    public static void main(String[] args) {
+        try {
+            method1();
+        } catch (Exception e) {
+            System.out.println(5);
+        }
+    }
+
+
+    static void method1() {
+        try {
+            method2(); 
+            System.out.println(1);
+        } catch(ArithmeticException e) { 
+            System.out.println(2);
+        } finally {
+            System.out.println(3);
+        }
+        
+        System.out.println(4); 
+    } // method1()
+    static void method2() {
+        throw new NullPointerException();
+    }
+}
+```
+```
+실행결과
+3
+5
+
+method1() -> method2(), NPE 발생 but try-catch로 해결 불가하므로 종료
+-> method1()에서도 처리 불가 -> finally로 3이 찍히고 main메소드로 돌아감
+-> 메인 메소드에서 예외처리 후 5 출력  
+```
+
+8-7
+```
+아래 코드가 실행될 때 결과를 적으시오.
+```
+```java
+class Exercise8_7 {
+static void method(boolean b) {
+    try {
+        System.out.println(1); 
+        if(b) System.exit(0); //괄호 안 0은 정상 종료, 1이 있으면 비정상 종료
+        System.out.println(2);
+    } catch(RuntimeException r) { 
+        System.out.println(3); 
+        return;
+    } catch(Exception e) { 
+        System.out.println(4); 
+        return;
+    } finally {
+        System.out.println(5); }
+    System.out.println(6);
+}
+
+    public static void main(String[] args) { 
+        method(true);
+        method(false); 
+    } // main
+}
+```
+```
+실행결과
+1
+
+b가 true이므로 System.exit이 일어나 1만 출력되고 프로그램이 종료됨
+```
+
+8-8
+```
+다음은 1~100 사이 숫자를 맞추는 게임이 실행되던 중 영문자를 넣어 발생한 예외다.
+예외처리를 해서 숫자 아닌 값이 입력되면 다시 입력받도록 만들기
+```
+```bash
+1과 100사이의 값을 입력하세요 :50
+더 작은 수를 입력하세요.
+1과 100사이의 값을 입력하세요 :asdf
+Exception in thread "main" java.util.InputMismatchException
+    at java.util.Scanner.throwFor(Scanner.java:819) 
+    at java.util.Scanner.next(Scanner.java:1431)
+    at java.util.Scanner.nextInt(Scanner.java:2040) 
+    at java.util.Scanner.nextInt(Scanner.java:2000) 
+    at Exercise8_8.main(Exercise8_8.java:16)
+```
+```java
+import java.util.*; class Exercise8_8{
+
+public static void main(String[] args) {
+    // 1~100사이의 임의의 값을 얻어서 answer에 저장한다. 
+    int answer = (int)(Math.random() * 100) + 1; 
+    int input = 0; // 사용자입력을 저장할 공간 
+    int count = 0; //시도횟수를 세기 위한 변수
+    
+    do {
+        count++;
+        System.out.print("1과 100사이의 값을 입력하세요 :");
+        input = new Scanner(System.in).nextInt();
+        
+        try {
+            input = new Scanner(System.in).nextInt(); 
+        } catch (Exception e) {
+            System.out.println("유효하지 않은 값입니다." + " 다시 입력해주세요.");
+            continue;
+        }
+
+        if(answer > input) {
+            System.out.println("더 큰 수를 입력하세요.");
+        } else if(answer < input) { 
+            System.out.println("더 작은 수를 입력하세요.");
+        } else {
+            System.out.println("맞췄습니다."); 
+            System.out.println("시도횟수는 "+count+"번입니다."); 
+            break; // do-while문을 벗어난다
+        }
+      } while(true); // 무한반복문
+    } // end of main
+} // end of class HighLow
+```
+8-9
+```
+다음과 같은 조건의 예외 클래스를 작성하라.
+(생성자는 실행 결과를 보고 알맞게 작성)
+
+* 클래스명 : UnsupportedFuctionException 
+* 조상클래스명 : RuntimeException
+* 멤버변수 :
+    이 름 : ERR_CODE 
+    저장값 : 에러코드
+    타 입 : int
+    기본값 : 100
+    제어자 : final private
+* 메서드 :
+ 1. 
+  메서드명 : getErrorCode
+  기 능 : 에러코드(ERR_CODE)를 반환한다.
+  반환타입 : int
+  매개변수 : 없음
+  제어자 : public
+       
+ 2. 
+  메서드명 : getMessage
+  기 능 : 메세지의 내용을 반환한다.(Exception클래스의 getMessage()를 오버라이딩)
+  반환타입  : String
+  매개변수: 없음
+  제어자: public
 ```
 
 ```java
+class UnsupportedFunctionException extends RuntimeException {
+    private final int ERR_CODE;
+    
+    UnsupportedOperationException(String msg, int errCode) { //생성자
+        super(msg); //RuntimeException(String msg)를 호출
+        ERR_CODE = errCode;
+    }
+    
+    UnsupportedOperationException(String msg) {
+        this(msg, 100); //에러코드는 기본값 100
+    }
+    
+    public int getErrorCode() { //에러코드를 반환한다.
+        return ERR_CODE; 
+    }
+    
+    public String getMessage() { // 메세지의 내용을 반환한다.(Exception클래스의 getMessage()를 오버라이딩)
+        return "[" + getERR_CODE() +"]" + super.getMessage();
+    }
+}
+
+class Exercise8_9 { 
+    public static void main(String[] args) throws Exception {
+        throw new UnsupportedFuctionException("지원하지 않는 기능입니다.",100);
+    }
+}
 ```
 
+```bash
+실행결과
+Exception in thread "main" UnsupportedFuctionException: [100]지원하지 않는 기능 입니다. 
+  at Exercise8_9.main(Exercise8_9.java:5)
+```
+
+8-10
+```
+아래 코드가 실행되었을 때의 결과?
+```
 ```java
+class Exercise8_10 {
+    public static void main(String[] args) {
+        try {
+            method1();
+            System.out.println(6);
+        } catch (Exception e) {
+            System.out.println(7);
+        }
+    }
+
+    static void method1() throws Exception {
+        try {
+            method2();
+            System.out.println(1);
+        } catch (NullPointerException e) {
+            System.out.println(2);
+            throw e;
+        } catch (Exception e) {
+            System.out.println(3);
+        } finally {
+            System.out.println(4);
+        }
+        System.out.println(5);
+    } // method1()
+
+    static void method2() {
+        throw new NullPointerException();
+    }
+}
 ```
 
-```java
 ```
+실행결과
+2
+4
+7
 
-```java
+method1() -> method2(), NPE -> method1()의 첫번째 catch에서 NPE 처리, 2 출력
+-> throw e; 로 예외 되던지기 발생, finally 실행으로 4 출력 -> 메인함수 catch에서 
+예외 처리 후 7 출력 되고 try-catch 벗어나 종료
 ```
-
-```java
-```
-

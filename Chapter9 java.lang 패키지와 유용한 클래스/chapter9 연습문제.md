@@ -520,13 +520,16 @@ class Exercise9_11 {
 ```bash
 실행 결과
 
-C:\jdk1.8\work\ch9>java Exercise9_11 2 시작 단과 끝 단, 두 개의 정수를 입력해주세요. 
+C:\jdk1.8\work\ch9>java Exercise9_11 2 
+시작 단과 끝 단, 두 개의 정수를 입력해주세요. 
 USAGE : GugudanTest 3 5
 
-C:\jdk1.8\work\ch9>java Exercise9_11 1 5 단의 범위는 2와 9사이의 값이어야 합니다.
+C:\jdk1.8\work\ch9>java Exercise9_11 1 5 
+단의 범위는 2와 9사이의 값이어야 합니다.
 USAGE : GugudanTest 3 5
 
-C:\jdk1.8\work\ch9>java Exercise9_11 3 5 3*1=3
+C:\jdk1.8\work\ch9>java Exercise9_11 3 5 
+3*1=3
 3*2=6
 3*3=9
 3*4=12

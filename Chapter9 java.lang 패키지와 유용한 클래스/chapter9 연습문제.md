@@ -584,7 +584,10 @@ class Exercise9_12{
      */
     public static int getRand(int from, int to) {
         return (int) (Math.random() * (Math.abs(to-from)+1)) + Math.min(from,to);
+        // (Math.abs(to-from)+1)는 범위에 포함된 정수의 개수. 이 정수 중 하나가 임의로 선택됨
+        // (끝값 - 시작값) + 1 , 예컨대 1부터 10까지인 경우, (10-1)+1 = 10
         // to-from = 끝값-시작값, abs는 from 값이 to보다 클 경우를 대비해 절대값 처리. 
+        // Math.min(from,to)는 범위의 시작값.
     }
     
      public static void main(String[] args){

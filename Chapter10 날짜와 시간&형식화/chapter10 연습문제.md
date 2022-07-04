@@ -53,7 +53,9 @@ class Exercise10_1 {
 ```
 
 ```java
-import java.util.*; 
+import sun.util.resources.cldr.ar.CalendarData_ar_AE;
+
+import java.util.*;
 import java.text.*;
 
 class Exercise10_2 {
@@ -69,44 +71,73 @@ class Exercise10_2 {
          6. 만일 from의 일(DAY_OF_MONTH)이 21일 이후고
             to의 일(DAY_OF_MONTH)이 21일 이전이면 monDiff의 값을 1 감소시킨다.
          */
+        if (from == null || to == null) {
+            return 0;
+        }
+        if (from.equals(tp) && from.get(Calendar.DAY_OF_MONTH) == 21) {
+            return 1;
+        }
+        
+        int fromYear = from.get(Calendar.YEAR);
+        int fromMonth = from.get(Calendar.MONTH);
+        int fromDay = from.get(Calendar.DAY_OF_MONTH);
+
+        int toYear = to.get(Calendar.YEAR);
+        int toMonth = to.get(Calendar.MONTH);
+        int toDay = to.get(Calendar.DAY_OF_MONTH);
+        
+        int monDiff = (toYear * 12 + toMon) - (fromYear * 12 + fromMon);
+        
+        if (monDiff < 0 ) {
+            return 0;
+        }
+        
+        if (fromDay <= 21 && toDay >= 21){
+            return monDiff++;
+        }
+        
+        if (fromDay > 21 && toDay < 21) {
+            monDiff--;
+        }
+
         return monDiff;
     }
 
     static void printResult(Calendar from, Calendar to) {
         Date fromDate = from.getTime();
         Date toDate = to.getTime();
-        
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.print(sdf.format(fromDate)+" ~ "
-                +sdf.format(toDate)+":");
+        System.out.print(sdf.format(fromDate) + " ~ "
+                + sdf.format(toDate) + ":");
         System.out.println(paycheckCount(from, to));
     }
 
     public static void main(String[] args) {
-        Calendar fromCal = Calendar.getInstance(); 
+        Calendar fromCal = Calendar.getInstance();
         Calendar toCal = Calendar.getInstance();
-        fromCal.set(2010,0,1); 
-        toCal.set(2010,0,1); 
+        fromCal.set(2010, 0, 1);
+        toCal.set(2010, 0, 1);
         printResult(fromCal, toCal);
-        
-        fromCal.set(2010,0,21); 
-        toCal.set(2010,0,21); 
+
+        fromCal.set(2010, 0, 21);
+        toCal.set(2010, 0, 21);
         printResult(fromCal, toCal);
-        
-        fromCal.set(2010,0,1); 
-        toCal.set(2010,2,1); 
+
+        fromCal.set(2010, 0, 1);
+        toCal.set(2010, 2, 1);
         printResult(fromCal, toCal);
-        
-        fromCal.set(2010,0,1); 
-        toCal.set(2010,2,23); 
+
+        fromCal.set(2010, 0, 1);
+        toCal.set(2010, 2, 23);
         printResult(fromCal, toCal);
-        
-        fromCal.set(2010,0,23); 
-        toCal.set(2010,2,21); 
+
+        fromCal.set(2010, 0, 23);
+        toCal.set(2010, 2, 21);
         printResult(fromCal, toCal);
-        
-        fromCal.set(2011,0,22); 
-        toCal.set(2010,2,21); 
+
+        fromCal.set(2011, 0, 22);
+        toCal.set(2010, 2, 21);
         printResult(fromCal, toCal);
     }
 }

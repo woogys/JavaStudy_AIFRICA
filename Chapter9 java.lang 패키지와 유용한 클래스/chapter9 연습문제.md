@@ -75,7 +75,8 @@ public static void main(String[] args) {
 }
 
 class Point3D { int x,y,z;
-    Point3D(int x, int y, int z) { this.x=x;
+    Point3D(int x, int y, int z) { 
+        this.x=x;
         this.y=y;
         this.z=z;
     }
@@ -519,13 +520,16 @@ class Exercise9_11 {
 ```bash
 실행 결과
 
-C:\jdk1.8\work\ch9>java Exercise9_11 2 시작 단과 끝 단, 두 개의 정수를 입력해주세요. 
+C:\jdk1.8\work\ch9>java Exercise9_11 2 
+시작 단과 끝 단, 두 개의 정수를 입력해주세요. 
 USAGE : GugudanTest 3 5
 
-C:\jdk1.8\work\ch9>java Exercise9_11 1 5 단의 범위는 2와 9사이의 값이어야 합니다.
+C:\jdk1.8\work\ch9>java Exercise9_11 1 5 
+단의 범위는 2와 9사이의 값이어야 합니다.
 USAGE : GugudanTest 3 5
 
-C:\jdk1.8\work\ch9>java Exercise9_11 3 5 3*1=3
+C:\jdk1.8\work\ch9>java Exercise9_11 3 5 
+3*1=3
 3*2=6
 3*3=9
 3*4=12
@@ -580,7 +584,10 @@ class Exercise9_12{
      */
     public static int getRand(int from, int to) {
         return (int) (Math.random() * (Math.abs(to-from)+1)) + Math.min(from,to);
+        // (Math.abs(to-from)+1)는 범위에 포함된 정수의 개수. 이 정수 중 하나가 임의로 선택됨
+        // (끝값 - 시작값) + 1 , 예컨대 1부터 10까지인 경우, (10-1)+1 = 10
         // to-from = 끝값-시작값, abs는 from 값이 to보다 클 경우를 대비해 절대값 처리. 
+        // Math.min(from,to)는 범위의 시작값.
     }
     
      public static void main(String[] args){

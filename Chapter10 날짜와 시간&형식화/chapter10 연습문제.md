@@ -12,7 +12,7 @@ class Exercise10_1 {
     public static void main(String[] args) {
         Calendar cal = Calendar.getInstance(); 
         // 추상클래스 Calendar는 메소드를 통해 완전히 구현된 클래스의 인스턴스를 얻는다.
-        cal.set(2010,0,1); // 2010년 1월 1일로 초기화, 월은 0부터 인덱스 시
+        cal.set(2010,0,1); // 2010년 1월 1일로 초기화, 월은 0부터 인덱싱
         
         for (int i = 0; i < 12; i++) {
             int weekday = cal.get(Calendar.DAY_OF_WEEK); // 1일이 무슨 요일인지 구한다.
@@ -72,10 +72,10 @@ class Exercise10_2 {
             to의 일(DAY_OF_MONTH)이 21일 이전이면 monDiff의 값을 1 감소시킨다.
          */
         if (from == null || to == null) {
-            return 0;
+            return 0; //from 또는 to가 null이면 0을 반환한다.
         }
-        if (from.equals(tp) && from.get(Calendar.DAY_OF_MONTH) == 21) {
-            return 1;
+        if (from.equals(to) && from.get(Calendar.DAY_OF_MONTH) == 21) {
+            return 1; // from와 to가 같고 날짜가 21일이면 1을 반환한다.
         }
         
         int fromYear = from.get(Calendar.YEAR);
@@ -86,18 +86,21 @@ class Exercise10_2 {
         int toMonth = to.get(Calendar.MONTH);
         int toDay = to.get(Calendar.DAY_OF_MONTH);
         
-        int monDiff = (toYear * 12 + toMon) - (fromYear * 12 + fromMon);
-        
+        int monDiff = (toYear * 12 + toMonth) - (fromYear * 12 + fromMonth); 
+        // to와 from이 몇 개월 차이인지 계산해서 변수 monDiff에 담는다.
+
         if (monDiff < 0 ) {
-            return 0;
+            return 0; //monDiff가 음수이면 0을 반환한다.
         }
         
         if (fromDay <= 21 && toDay >= 21){
-            return monDiff++;
+            return monDiff++; //만일 from의 일(DAY_OF_MONTH)이 21일이거나 이전이고
+                             // to의 일(DAY_OF_MONTH)이 21일이거나 이후이면 monDiff의 값을 1 증가시킨다.
         }
         
         if (fromDay > 21 && toDay < 21) {
-            monDiff--;
+            monDiff--;   //만일 from의 일(DAY_OF_MONTH)이 21일 이후고
+                        //to의 일(DAY_OF_MONTH)이 21일 이전이면 monDiff의 값을 1 감소시킨다.
         }
 
         return monDiff;
@@ -168,7 +171,9 @@ class Exercise10_3{
         DecimalFormat df = new DecimalFormat("#,###.##"); // 변환할 문자열의 형식을 지정 
         DecimalFormat df2 = new DecimalFormat("#,####");
 
-        try {Number num = df.parse(data);
+        try {
+            Number num = df.parse(data);
+            
             double d = num.doubleValue(); 
             System.out.println("data:"+data); 
             System.out.println("반올림:"+Math.round(d)); 
@@ -184,6 +189,9 @@ class Exercise10_3{
 data:123,456,789.5 
 반올림:123456790 
 만단위:1,2345,6790
+
+특정 형식의 문자열을 숫자로 변환하려면 DecimalFormat 클래스에 형식을 정의하고, parse()를 이용한다.
+반환 타입은 Number이므로, 다시 doubleValue()를 호출해서 double 타입으로 값을 얻어야 한다.
 ```
 
 10-4
@@ -199,13 +207,13 @@ import java.text.*;
 
 class Exercise10_4 {
     public static void main(String[] args) {
-        String pattern = "yyyy/MM/dd";
+        String pattern = "yyyy/MM/dd"; 
         String pattern2 = "입력하신 날짜는 E요일입니다."; // 'E'는 일~토 중의 하나가 된다.
 
-        DateFormat df = new SimpleDateFormat(pattern); 
-        DateFormat df2 = new SimpleDateFormat(pattern2);
+        DateFormat df = new SimpleDateFormat(pattern); //  SimpleDateFormat은 날찌를 지정된 형식으로 출력하거나,
+        DateFormat df2 = new SimpleDateFormat(pattern2); // 문자열을 지정된 형식으로 변환해준다. (유효성 검사에도 이용 가능)
         
-        Scanner s = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         Date inDate = null;
         
@@ -214,8 +222,8 @@ class Exercise10_4 {
                 + "의 형태로 입력해주세요.(입력예:2007/05/11)");
             try {
                 System.out.print(">>");
-                inDate = df.parse(s.nextLine()); // 입력받은 날짜를 Date로 변환한다.
-                break; // parse()에서 예외가 발생하면 이 문장은 수행되지 않는다. 
+                inDate = df.parse(sc.nextLine()); // 입력받은 날짜를 Date로 변환한다. 지정된 형식과 다를 경우,
+                break; // parse()에서 예외가 발생(ParseException이 발생할 수 있다.)하고 이 부분은 수행되지 않는다. 
                 } catch(Exception e) {}
             } while(true);
             System.out.println(df2.format(inDate));
@@ -251,6 +259,32 @@ class Exercise10_5 {
     /* 
     (1) getDayDiff메서드를 작성하시오. 
     */
+    static int getDayDiff (String yyyymmdd1, String yyyymmdd2) {
+        int diff = 0;
+        
+        try {
+            int year1 = Integer.parseInt(yyyymmdd1.substring(0,4));
+            int month1 = Integer.parseInt(yyyymmdd1.substring(4,6)) - 1; // month는 0~11 이므로 -1 해줘야 맞게 나온다. 
+            int day1 = Integer.parseInt(yyyymmdd1.substring(6,8));
+            
+            int year2 = Integer.parseInt(yyyymmdd2.substring(0,4));
+            int month2 = Integer.parseInt(yyyymmdd2.substring(4,6)) - 1;
+            int day2 = Integer.parseInt(yyyymmdd2.substring(6,8));
+            
+            Calendar date1 = Calendar.getInstance();
+            Calendar date2 = Calendar.getInstance();
+            
+            date1.set(year1, month1, day1);
+            date2.set(year2, month2, day2);
+            
+            diff = (int) ((date1.getTimeInMillis()-date2.getTimeInMillis())/(24*60*60*1000));
+            // getTimeInMillis는 날짜를 천분의 일초로 변환해준다. 변환된 두 날짜간 차이를 구한 뒤 일 단위로 다시 변환하면
+            //날짜 차이를 구할 수 있다. 천분의 일초 단위를 바꾸려면 /(24*60*60*1000)로 나눈다. 
+        } catch (Exception e) {
+            diff = 0; // 예외 발생시 0 리턴
+        }
+        return diff;
+    }
     public static void main(String[] args){ 
         System.out.println(getDayDiff("20010103","20010101")); 
         System.out.println(getDayDiff("20010103","20010103")); 
@@ -278,10 +312,10 @@ import java.time.temporal.*;
 
 class Exercise10_6 {
     public static void main(String[] args) {
-        LocalDate birthDay = LocalDate.of(1989, 6, 11); // 자신의 생일을 지정
+        LocalDate birthDay = LocalDate.of(1989, 6, 11); 
         LocalDate now = LocalDate.now();
 
-        long days = birthDay.until(now, ChronoUnit.DAYS);
+        long days = birthDay.until(now, ChronoUnit.DAYS); // LocalDate의 until() 사용
 
         System.out.println("birth day="+birthDay); 
         System.out.println("today ="+now); 
@@ -310,7 +344,7 @@ import static java.time.temporal.TemporalAdjusters.*;
 class Exercise10_7 {
     public static void main(String[] args) {
         LocalDate date = LocalDate.of(2016, 12, 1);
-        System.out.println(date.with(dayOfWeekInMonth(4, TUESDAY)));
+        System.out.println(date.with(dayOfWeekInMonth(4, TUESDAY))); // x째 주 x요일은 dayOfWeekInMonth 사용
     }
 }
 ```
@@ -331,16 +365,16 @@ import java.time.*;
 
 class Exercise10_8 {
     public static void main(String[] args) {
-        ZonedDateTime zdt = ZonedDateTime.now();
+        ZonedDateTime zdt = ZonedDateTime.now(); 
         ZoneId nyId = ZoneId.of("America/New_York");
         ZonedDateTime zdtNY = ZonedDateTime.now().withZoneSameInstant(nyId);
 
         System.out.println(zdt); 
         System.out.println(zdtNY);
 
-        long sec1 = zdt.getOffset().getTotalSeconds(); 
-        long sec2 = zdtNY.getOffset().getTotalSeconds(); 
-        long diff = (sec1 - sec2)/3600;
+        long sec1 = zdt.getOffset().getTotalSeconds();  // getOffSet은 ZoneOffSet 반환.
+        long sec2 = zdtNY.getOffset().getTotalSeconds(); // ZoneOffSet의 getTotalSeconds()를 호출하면 
+        long diff = (sec1 - sec2)/3600; // 날짜와 초단위로 변환한 결과가 나옴, 이를 다시 3600(60*60)으로 나눠 일 수로 변환 
 
         System.out.println("sec1="+sec1); 
         System.out.println("sec2="+sec2); 
@@ -351,9 +385,9 @@ class Exercise10_8 {
 
 ```
 실행결과
-2016-01-28T23:01:00.136+09:00[Asia/Seoul] 
-2016-01-28T09:01:00.138-05:00[America/New_York] 
+2022-07-05T23:13:29.037+09:00[Asia/Seoul]
+2022-07-05T10:13:40.685-04:00[America/New_York]
 sec1=32400
-sec2=-18000
-diff=14 hrs
+sec2=-14400
+diff=13 hrs
 ```

@@ -168,7 +168,7 @@ class Student implements Comparable {
         if (obj instanceof Student) {
             Student tmp = (Student) obj;
 
-            return name.compareTo(tmp.name);
+            return name.compareTo(tmp.name); // String 클래스의 문자열 비교를 위한 compareTo 메소드 사용
         } else {
             return -1;
         }
@@ -206,7 +206,8 @@ class Exercise11_5 {
 
 11-6
 ```
-TreeSet이 학 생들의 평균을 기준으로 정렬하도록 compare(Object o1, Object o2)와 
+TreeSet이 학생들의 평균을 기준으로 정렬하도록 
+compare(Object o1, Object o2)와 
 평균점수의 범위를 주면 해당 범위에 속한 학생의 수를 반환하는 getGroupCount()를 완성
 
 [Hint] TreeSet의 subSet(Object from, Object to)를 사용
@@ -268,8 +269,8 @@ class Exercise11_6 {
         Student s1 = new Student("",0,0,from,from,from); 
         Student s2 = new Student("",0,0,to,to,to);
         
-        return tset.subSet(s1,s2).size();
-        
+        return tset.subSet(s1,s2).size(); // TreeSet은 정렬된 상태로 elements를 저장한다. 검색, 정렬(특히 부분 정렬)에 유리.
+        //subSet()은 지정된 범위에 속하는 요소들이 포함된 TreeSet을 반환한다. (from <= x < to)
     }
 
     public static void main(String[] args) {

@@ -375,8 +375,8 @@ class BanNoAscending implements Comparator {
             
             int result = s1.ban - s2.ban;
             
-            if (result == 0) { // 반이 같으면, 번호를 비교한다. 
-                return s1.no - s2.no;
+            if (result == 0) { // 연산 결과 반이 같으면 
+                return s1.no - s2.no; // 번호 차이를 구해서 반환한다.
             }
             
             return result;
@@ -417,13 +417,13 @@ class Exercise11_7 {
 ```
 문제11-7의 Student클래스에 총점(total)과 전교등수(schoolRank)를 저장하기 위한 인스턴스변수를 추가. 
 Student클래스의 기본정렬을 이름(name)이 아닌 총점 (total)을 기준으로 한 내림차순으로 변경한 다음, 
-총점을 기준으로 각 학생의 전교등수 를 계산하고 전교등수를 기준으로 오름차순 정렬하여 출력
+총점을 기준으로 각 학생의 전교등수를 계산하고 전교등수를 기준으로 오름차순 정렬하여 출력
 ```
 
 ```java
 import java.util.*;
 
-class Student { 
+class Student implements Comparable { 
     String name; 
     int ban; 
     int no; 
@@ -431,7 +431,7 @@ class Student {
     int eng; 
     int math;
     
-    int total;
+    int total; //총점
     int schoolRank; // 전교등수
 
     Student(String name, int ban, int no, int kor, int eng, int math) { 
@@ -456,7 +456,7 @@ class Student {
     public int compareTo(Object o) {
         /* (1) 알맞은 코드를 넣어 완성하시오. */
         if(o instanceof Student) {
-            Student tmp = (Student)o;
+            Student tmp = (Student) o;
             return tmp.total - this.total; // 총점 기준(내림차순)으로 정렬한다.
             } else {
             return -1;
@@ -614,7 +614,7 @@ class Student {
     class Exercise11_9 {
         public static void calculateClassRank(List list) {
         // 먼저 반별 총점기준 내림차순으로 정렬한다.
-            Collections.sort(list, new ClassTotalComparator());
+            Collections.sort(list, new ClassTotalComparator()); //sort 정렬 기준으로 ClassTotalCompator 제공 
 
             int prevBan = -1;
             int prevRank = -1;
@@ -634,18 +634,19 @@ class Student {
                     이전 총점(prevTotal), 이전 등수(prevRank)에 저장한다.
             */
             
-            for (int i = 0, n = 0; i < length; i++, n++) {
-                Student s = (Student)list.get(i);
+            for (int i = 0, n = 0; i < length; i++, n++) { // 반이 달라지면 다시 1등부터 등수를 매겨야 하므로 
+                // 등수 n 뿐만 아니라 이전등수와 이전 총점도 초기화 해야 함. 
+                Student s = (Student)list.get(i); // list에 저장된 student 객체를 하나씩 읽어옴
                 
-                if(s.ban!=prevBan) { 
-                    prevRank = -1;
+                if(s.ban!=prevBan) {  // 반이 달라지면 
+                    prevRank = -1; // 이전 등수와 총점 초기화
                     prevTotal = -1; 
                     n = 0;
                 }
-                if(s.total==prevTotal) { 
+                if(s.total==prevTotal) { //총점이 이전 총점과 같으면 등수는 이전 등수와 같다.
                     s.classRank = prevRank;
                 } else {
-                    s.classRank = n + 1;
+                    s.classRank = n + 1; // 아니면 등수 +1
                 }
                 
                 prevBan = s.ban;
@@ -751,7 +752,7 @@ class Exercise11_10 {
         for (int i = 0; set.size() < 25; i++) {
             set.add((int) (Math.random() * 30) + 1 + "");
         }
-        ArrayList list = new ArrayList(set); 
+        ArrayList list = new ArrayList(set);
         Collections.shuffle(list);
 
         Iterator it = list.iterator();

@@ -831,6 +831,11 @@ class Exercise11_11 {
 ```
 실행결과
 [3K, 1K]
+
+String 클래스의 hashCode()는 객체 주소가 아니라 문자열 내용 기반으로 해시코드를 생성한다.
+따라서 문자열 내용이 같으면 항상 같은 값의 해시코드가 반환된다. 
+toString()은 num과 isKwang의 값을 문자열로 반환하므로 여기에 hashCode()를 
+호출하도록 오버라이딩하면 중복을 제거할 수 있다. 
 ```
 
 11-12
@@ -874,6 +879,31 @@ class SutdaDeck{
             1. jokbo(HashMap)에 족보를 저장한다.
                두 카드의 값을 문자열로 붙여서 key로, 점수를 value로 저장한다.
         */
+        jokbo.put("KK", 4000);
+
+        jokbo.put("1010",3100);
+        jokbo.put("99", 3090);
+        jokbo.put("88", 3080);
+        jokbo.put("77", 3070);
+        jokbo.put("66", 3060);
+        jokbo.put("55", 3050);
+        jokbo.put("44", 3040);
+        jokbo.put("33", 3030);
+        jokbo.put("22", 3020);
+        jokbo.put("11", 3010);
+
+        jokbo.put("12", 2060);
+        jokbo.put("21", 2060);
+        jokbo.put("14", 2050);
+        jokbo.put("41", 2050);
+        jokbo.put("19", 2040);
+        jokbo.put("91", 2040);
+        jokbo.put("110", 2030);
+        jokbo.put("101", 2030);
+        jokbo.put("104", 2020);
+        jokbo.put("410", 2020);
+        jokbo.put("46", 2010);
+        jokbo.put("64", 2010);
     }
 
     int getPoint(Player p) { 
@@ -892,6 +922,18 @@ class SutdaDeck{
                 (c1.num + c2.num) % 10 + 1000
             4. Player의 점수(point)에 계산한 값을 저장한다.
          */
+        
+        if (c1.isKwang && c2.isKwang) {
+            result = (Integer)jokbo.get("KK");
+        } else {
+            result = (Integer) jokbo.get(""+c1.num+c2.num);
+            
+            if (result == null) {
+                result = new Integer ((c1.num + c2.num)%10 +1000);
+            }
+        }
+        
+        p.point = result.intValue();
 
         return result.intValue();
     }
@@ -986,6 +1028,13 @@ class Exercise11_13 {
         TreeMap rank = new TreeMap(new Comparator(){ 
             public int compare(Object o1, Object o2) {
                 /* (1) 알맞은 코드를 넣어 완성하시오. */     
+                if (o1 instanceof Player && o2 instanceof Player) {
+                    Player p1 = (Player) o1;
+                    Player p2 = (Player) o2;
+                    
+                    return p2.point - p1.point; // 점수를 기준으로 내림차순 
+                }
+                return -1;
             }
         });
         for(int i=0; i < pArr.length;i++) {
@@ -1016,19 +1065,29 @@ class SutdaDeck {
     void registerJokbo() {
         jokbo.put("KK", 4000);
 
-        jokbo.put("1010",3100);  jokbo.put("12", 2060);
-        jokbo.put("99", 3090);   jokbo.put("21", 2060);
-        jokbo.put("88", 3080);   jokbo.put("14", 2050);
-        jokbo.put("77", 3070);   jokbo.put("41", 2050);
-        jokbo.put("66", 3060);   jokbo.put("19", 2040);
-        jokbo.put("55", 3050);   jokbo.put("91", 2040);
-        jokbo.put("44", 3040);   jokbo.put("110", 2030);
-        jokbo.put("33", 3030);   jokbo.put("101", 2030);
-        jokbo.put("22", 3020);   jokbo.put("104", 2020);
-        jokbo.put("11", 3010);   jokbo.put("410", 2020); 
-                                 jokbo.put("46", 2010); 
-                                 jokbo.put("64", 2010);
-        
+        jokbo.put("1010",3100);  
+        jokbo.put("99", 3090);   
+        jokbo.put("88", 3080);  
+        jokbo.put("77", 3070);   
+        jokbo.put("66", 3060);   
+        jokbo.put("55", 3050);   
+        jokbo.put("44", 3040);   
+        jokbo.put("33", 3030);  
+        jokbo.put("22", 3020);   
+        jokbo.put("11", 3010);   
+                                 
+        jokbo.put("12", 2060);                         
+        jokbo.put("21", 2060);
+        jokbo.put("14", 2050);
+        jokbo.put("41", 2050);
+        jokbo.put("19", 2040);
+        jokbo.put("91", 2040);
+        jokbo.put("110", 2030);
+        jokbo.put("101", 2030);
+        jokbo.put("104", 2020);
+        jokbo.put("410", 2020);
+        jokbo.put("46", 2010);
+        jokbo.put("64", 2010);
     }
 
     int getPoint(Player p) {
@@ -1162,6 +1221,7 @@ class Exercise11_14 {
         System.out.println(" 3. 프로그램 종료 ");
         System.out.println();
         System.out.print("원하는 메뉴를 선택하세요.(1~3) : ");
+        
         int menu = 0;
         
         /* (1) 아래의 로직에 맞게 코드를 작성하시오.
@@ -1173,7 +1233,7 @@ class Exercise11_14 {
             try {
             menu = Integer.parseInt(s.nextLine().trim());
             
-            if(1 <= menu && menu <= 3) { 
+            if (1 <= menu && menu <= 3) { 
                 break;
             } else {
             throw new Exception();

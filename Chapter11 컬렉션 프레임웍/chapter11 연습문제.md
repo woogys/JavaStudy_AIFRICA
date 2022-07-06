@@ -904,6 +904,8 @@ class SutdaDeck{
         jokbo.put("410", 2020);
         jokbo.put("46", 2010);
         jokbo.put("64", 2010);
+        // jokbo.put("KK", new Integer(4000); 같은 식으로 쓰는 게 원칙,
+        // jdk 1.5부터 오토박싱 추가로 자동 wrapper 클래스 변환.
     }
 
     int getPoint(Player p) { 

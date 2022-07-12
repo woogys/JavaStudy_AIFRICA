@@ -20,14 +20,20 @@ class Box<T> { // 제네릭 타입 T를 선언
 ```
 
 ```
-a. Box<Object> b = new Box<String>();
-b. Box<Object> b = (Object)new Box<String>(); 
-c. new Box<String>().setItem(new Object()); 
-d. new Box<String>().setItem("ABC");
+a,b,c
 
-a : 대입된 타입이 다르므로 오류 발생
-b : (object) 타입을 Box<Object> 타입 참조변수에 대입 불가
-c : 대입된 타입은 String, setItem 타입은 Object 이므로 허용 불가
+a. Box<Object> b = new Box<String>();
+Object, Stiring 대입된 타입이 다르므로 오류 발생
+
+b. Box<Object> b = (Object)new Box<String>(); 
+(object) 타입을 Box<Object> 타입 참조변수에 대입 불가
+Box<String>이 Box<Object>로 형변환 될 수 없음을 의미.
+
+c. new Box<String>().setItem(new Object()); 
+대입된 타입은 String, setItem 타입은 Object 이므로 허용 불가
+
+d. new Box<String>().setItem("ABC");
+String 타입에 해당하는 문자열 "ABC"가 매개변수이므로 굿굿
 ```
 
 
@@ -50,10 +56,15 @@ class Juicer {
 ```
 
 ```
+타입 T를 요소로 하는 FruiteBox를 매개변수로 허용한다.
+이때 T는 Fruit와 그 자손들만 가능하도록 제한.
+p.685
+
 c,d
 
 a. Juicer.<Apple>makeJuice(new FruitBox<Fruit>());
-타입이 다르면 Fruit와 Apple이 부모-자식 관계에 있어도 에러 발생
+제네릭 메소드에 대입된 타입은 Apple. 따라서 매개변수는 FruitBox<Apple>
+타입이 된다. 문제는 FruitBox<Fruit>이라고 했으므로 에러.
 
 b. Juicer.<Fruit>makeJuice(new FruitBox<Grape>()); 
 타입이 다르면 Fruit와 Grape가 부모-자식 관계에 있어도 에러 발생
@@ -94,11 +105,11 @@ class Box<T extends Fruit> { // 제네릭 타입 T를 선언
 c, d, g
 
 a. Box<?> b = new Box();
-Box<?> = Box<? extends Object> 같은 형태.
+Ok. Box<?> = Box<? extends Object> 같은 형태.
 new Box<>();이 더 올바른 형태긴 하지만 a처럼 써도 무방
 
 b. Box<?> b = new Box<>();
-타입이 생략된 형태. 생략 시 참조변수 타입과 같은 것으로 간주
+Ok. 타입이 생략된 형태. 생략 시 참조변수 타입과 같은 것으로 간주
 문제에서 <T extends Fruit>으로 제한이 걸려 있으므로 
 Fruit이 생략된 걸로 봐야 함
 
@@ -124,7 +135,7 @@ new 연산자에는 와일드카드 사용 불가
 아래 메소드는 두 개의 ArrayList를 매개변수로 받아서, 하나의 새로운 
 ArrayList로 병합하는 메소드다. 제네릭 메소드로 변경할 것
 ```
-
+변경 전
 ```java
  public static ArrayList <? extends Product> merge (
         ArrayList<? extends Product> list, ArrayList<?extends Product> list2) {
@@ -134,7 +145,7 @@ ArrayList로 병합하는 메소드다. 제네릭 메소드로 변경할 것
               return newList;
 }
 ```
-
+변경 후
 ```java
 public static <T extends Product> ArrayList<T> merge (
         ArrayList<T> list, ArrayList<T> list2) {

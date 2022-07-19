@@ -127,11 +127,14 @@ import java.util.stream.*;
 
 class Exercise14_4 {
     public static void main(String[] args) {
-        Stream<Integer> die = IntStream.rangeClosed(1, 6).boxed();
+        Stream<Integer> dice = IntStream.rangeClosed(1, 6).boxed();
+        //IntStream.rangeClosed 특정 범위의 숫자를 차례대로 생성해주는 메소드 (시작값, 종료값)
+        //range는 종료값 미포함. boxed()는 int,long,double을 Integer,Long,Double로 박싱해서 스트림 생성
+        
         //flatMap은 모든 element를 단일한 원소들의 스트림으로 반환해준다. 
         //중복 구조로 된 리스트를 하나의 스트림처럼 다룰 수 있다.
         //따라서 filter를 바로 체이닝해 사용가능.
-        die.flatMap(i -> Stream.of(1, 2, 3, 4, 5, 6).map(i2 -> new int[]{i, i2}))
+        dice.flatMap(i -> Stream.of(1, 2, 3, 4, 5, 6).map(i2 -> new int[]{i, i2}))
                 .filter(iArr -> iArr[0] + iArr[1] == 6)
                 .forEach(iArr -> System.out.println(Arrays.toString(iArr)));
     }
@@ -163,6 +166,7 @@ class Exercise14_5 {
         String[] strArr = {"aaa", "bb", "c", "dddd"};
         Stream<String> strStream = Stream.of(strArr);
         
+        //mapToInt에 있는 sum() 메소드를 이용. 이외에도 average(), max(), min() 있음
         int sum = strStream.mapToInt(String::length).sum();
         System.out.println("sum=" + sum);
     }
@@ -194,7 +198,8 @@ class Exercise14_5 {
 
         strStream.map(String::length) // strStream.map(s-> s.length())
                 .sorted(Comparator.reverseOrder()) // 문자열 길이로 역순 정렬
-                .limit(1).forEach(System.out::println); // 제일 긴 문자열의 길이 출력
+                .limit(1).forEach(System.out::println); 
+                //역순(문자열이 긴 순)으로 정렬된 상태에서 1개만 스트림 생성 후 출력
     }
 }
 ```
@@ -216,11 +221,11 @@ import java.util.stream.*;
 
 class Exercise14_6 {
     public static void main(String[] args) {
-        new Random().ints(1, 46) // 1~45사이의 정수(46은 포함안됨)
+        new Random().ints(1, 46) // 46은 미포함.
                 .distinct() // 중복제거
-                .limit(6) // 6개만
+                .limit(6) // 6개만 출력 (Random은 무한스트림이므로 limit 필요)
                 .sorted() // 정렬 
-                .forEach(System.out::println); // 화면에 출력
+                .forEach(System.out::println); // 출력
     }
 }
 ```
@@ -245,13 +250,15 @@ class Exercise14_6 {
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
-
 import static java.util.stream.Collectors.*;
 import static java.util.Comparator.*;
 
 class Student {
     String name;
-    boolean isMale; // 성별 int hak; // 학년 int ban; // 반 int score;
+    boolean isMale; // 성별 
+    int hak; // 학년 
+    int ban; // 반 
+    int score; //점수
 
     Student(String name, boolean isMale, int hak, int ban, int score) {
         this.name = name;
@@ -282,12 +289,11 @@ class Student {
     }
 
     public String toString() {
-        return String.format("[%s, %s, %d학년 %d반, %3d점]", name, isMale ?
-                "남" : "여", hak, ban, score);
-    }
+        return String.format("[%s, %s, %d학년 %d반, %3d점]", name, isMale ? "남" : "여", hak, ban, score);
+    } //%3d는 정수에 대해 세칸 넓이로 출력하는 의미.
 
     // groupingBy()에서 사용
-    enum Level {HIGH, MID, LOW} //성적을 상,중,하 세 단계로 분류
+    enum Level { HIGH, MID, LOW } //성적을 상,중,하 세 단계로 분류
 }
 
 class Exercise14_8 {
@@ -313,10 +319,15 @@ class Exercise14_8 {
                 new Student("강지미", false, 2, 3, 150),
                 new Student("이자바", true, 2, 3, 200)
         };
+        
         Map<Boolean, Map<Boolean, Long>> failedStuBySex =
                 /*
                         (1) 알맞은 코드를 넣으시오.
                  */
+                Stream.of(stuArr)
+                        .collect(partitioningBy(Student::isMale, partitioningBy(s -> s.getScore() < 150, counting())));
+        //partitioningBy()는 특정 기준에 따라 요소를 2개로 분할. Boolean(true, false) 타입을 그룹화하기 용이하다.
+        //counting()은 Collectors 클래스의 static 메소드.
         long failedMaleStuNum = failedStuBySex.get(true).get(true);
         long failedFemaleStuNum = failedStuBySex.get(false).get(true);
 
@@ -412,10 +423,14 @@ class Exercise14_9 {
         };
         
         Map<Integer, Map<Integer, Long>> totalScoreByHakAndBan =
-                        /*
-                        (1) 알맞은 코드를 넣으시오.
+                /*
+                (1) 알맞은 코드를 넣으시오.
                  */
-
+        Stream.of(stuArr)
+                .collect(groupingBy(Student::getHak), groupingBy(Student::getBan, summingLong(Student::getScore)));
+        // 학년(2개 이상일 가능성 대비), 반별 groupingBy() 사용. 
+        // summingLong()은 Collectors 클래스의 static 메소드.
+        
         for (Object e : totalScoreByHakAndBan.entrySet()) {
             System.out.println(e);
         }

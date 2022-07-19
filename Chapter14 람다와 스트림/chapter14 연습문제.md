@@ -129,11 +129,12 @@ class Exercise14_4 {
     public static void main(String[] args) {
         Stream<Integer> dice = IntStream.rangeClosed(1, 6).boxed();
         //IntStream.rangeClosed 특정 범위의 숫자를 차례대로 생성해주는 메소드 (시작값, 종료값)
-        //range는 종료값 미포함. boxed()는 int,long,double을 Integer,Long,Double로 박싱해서 스트림 생성
+        //range는 종료값 미포함. 
+        // boxed()는 int,long,double을 Integer,Long,Double로 박싱해서 스트림 생성, IntStream은 Stream<Integer>로 변환된다.
         
-        //flatMap은 모든 element를 단일한 원소들의 스트림으로 반환해준다. 
+        //flatMap은 모든 element를 단일한 원소들의 스트림으로 반환해준다. p.831
         //중복 구조로 된 리스트를 하나의 스트림처럼 다룰 수 있다.
-        //따라서 filter를 바로 체이닝해 사용가능.
+        //따라서 filter를 바로 체이닝해 사용가능. 
         dice.flatMap(i -> Stream.of(1, 2, 3, 4, 5, 6).map(i2 -> new int[]{i, i2}))
                 .filter(iArr -> iArr[0] + iArr[1] == 6)
                 .forEach(iArr -> System.out.println(Arrays.toString(iArr)));
